@@ -1,0 +1,22 @@
+
+name: "CodeQL - Javascript"
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+        - '**/*.js'
+        - '**/package.json'
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ main ]
+    paths:
+        - '**/*.js'
+        - '**/package.json'
+  workflow_dispatch:
+  schedule:
+    - cron: '38 20 * * 3'
+
+jobs:
+  sprout-codeql:
+    uses: sproutsocial/codeql-configurations/.github/workflows/codeql-analysis-javascript.yml@main
