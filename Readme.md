@@ -1,7 +1,10 @@
 # gulp-s3-upload
 __Version 1.7.6__
 
-Fork while I wait for https://github.com/clineamb/gulp-s3-upload/pull/68 to merge.
+Forked from https://github.com/clineamb/gulp-s3-upload/
+
+Applied additional change to enable a callback when attempting to upload a file to s3 whose contents differ from what already exists. Such a situation indicates an issue with hashes generated for file names.
+
 
 Use for uploading assets to Amazon S3 servers.
 This helps to make it an easy gulp task.
