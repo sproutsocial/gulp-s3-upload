@@ -1,5 +1,10 @@
 # gulp-s3-upload
-__Version 1.7.3__
+__Version 1.7.6__
+
+Forked from https://github.com/clineamb/gulp-s3-upload/
+
+Applied additional change to enable a callback when attempting to upload a file to s3 whose contents differ from what already exists. Such a situation indicates an issue with hashes generated for file names.
+
 
 Use for uploading assets to Amazon S3 servers.
 This helps to make it an easy gulp task.
@@ -48,9 +53,9 @@ var s3 = require('gulp-s3-upload')(
 
 ```
 
-The optional `config` argument can include any option available (like `region`) available in the [AWS Config Constructor](http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html#constructor-property). By default all settings are undefined. 
+The optional `config` argument can include any option available (like `region`) available in the [AWS Config Constructor](http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/Config.html#constructor-property). By default all settings are undefined.
 
-**Per AWS best practices**, the recommended approach for loading credentials is to use the shared credentials file (`~/.aws/credentials`). You can also set the `aws_access_key_id` and `aws_secret_access_key` environment variables or specify values directly in the gulpfile via the `accessKeyId` and `secretAccessKey` options.  
+**Per AWS best practices**, the recommended approach for loading credentials is to use the shared credentials file (`~/.aws/credentials`). You can also set the `aws_access_key_id` and `aws_secret_access_key` environment variables or specify values directly in the gulpfile via the `accessKeyId` and `secretAccessKey` options.
 
 If you want to use an AWS profile in your `~/.aws/credentials` file just set
 the environment variable AWS_PROFILE with your profile name before invoking
@@ -60,7 +65,7 @@ your gulp task:
 AWS_PROFILE=myprofile gulp upload
 ```
 
-If you are using **IAM** settings, just pass the noted config (`{useIAM:true}`) in order to default to using IAM.  More information on using [IAM settings here](https://aws.amazon.com/documentation/iam/). 
+If you are using **IAM** settings, just pass the noted config (`{useIAM:true}`) in order to default to using IAM.  More information on using [IAM settings here](https://aws.amazon.com/documentation/iam/).
 
 
 
@@ -199,7 +204,7 @@ If anything but a function is passed through, nothing will happen. If you want t
 
 #### metadataMap
 
-**NOTE**: It is preferred you use the maps.ParamsName method to define and map specific metadata to files.  Also, if you set both `maps.Metadata` and this, `metadataMap` will take precedence. 
+**NOTE**: It is preferred you use the maps.ParamsName method to define and map specific metadata to files.  Also, if you set both `maps.Metadata` and this, `metadataMap` will take precedence.
 
 Type: `object` or `function`
 
@@ -364,6 +369,13 @@ Type: `function`
 This function gets called with the S3 keyname as the first parameter if the uploaded file is a new file in the bucket, much like `onChange`.
 
 
+##### onSkippedExisting
+
+Type: `function`
+
+This function gets called with the S3 keyname as the first parameter if the file was skipped because `uploadNewFilesOnly` is set to `true` and a different file with the same name exists on S3.
+
+
 #### uploadNewFilesOnly
 
 Type: `boolean`
@@ -371,7 +383,7 @@ Type: `boolean`
 Set `uploadNewFilesOnly: true` if you only want to upload new files and not
 overwrite existing ones.
 
-## Stream Support 
+## Stream Support
 
 When uploading large files you may want to use `gulp.src` without buffers. Normally this plugin calculates an ETag hash of the contents and compares that to the existing files in the bucket. However, when using streams, we can't do this comparison.
 

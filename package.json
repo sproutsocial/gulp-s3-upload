@@ -1,6 +1,6 @@
 {
-  "name": "gulp-s3-upload",
-  "version": "1.7.3",
+  "name": "@sproutsocial/gulp-s3-upload",
+  "version": "1.7.6",
   "description": "A gulp task to asynchronous upload/update assets to an AWS S3 Bucket.",
   "main": "index.js",
   "directories": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/clineamb/gulp-s3-upload.git"
+    "url": "git://github.com/sproutsocial/gulp-s3-upload.git"
   },
   "keywords": [
     "gulp",
